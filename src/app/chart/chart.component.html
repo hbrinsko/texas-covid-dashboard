@@ -1,0 +1,41 @@
+<div class="row">
+  <mat-form-field>
+    <mat-label>Select Counties</mat-label>
+    <mat-select multiple [(value)]="selectedCounties" [compareWith]="compareFn">
+      <mat-option *ngFor="let name of names" (onSelectionChange)="onCountyChange(name)" [value]="name">
+        {{name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+  <mat-form-field>
+    <mat-label>Select a Chart Type</mat-label>
+    <mat-select [(value)]="selectedChart" (selectionChange)="onChartChange($event)">
+      <mat-option value="0">
+        Daily New Cases
+      </mat-option>
+      <mat-option value="1">
+        Cases Counts
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div *ngIf="chart && selectedCounties.length > 0">
+    <ngx-charts-line-chart
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="chart"
+    [gradient]="gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [autoScale]="autoScale">
+    </ngx-charts-line-chart>
+  </div>
+</div>
+
+
