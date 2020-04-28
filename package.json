@@ -26,6 +26,7 @@
     "@angular/router": "~9.1.1",
     "@swimlane/ngx-charts": "^14.0.0",
     "bootstrap": "^4.4.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "path": "^0.12.7",
     "rxjs": "~6.5.4",
