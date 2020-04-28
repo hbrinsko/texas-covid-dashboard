@@ -11,7 +11,7 @@ import { County, Chart } from './models/timeline.model';
 export class ChartComponent implements OnInit {
   counties: County[]
   chart: Chart[]
-  view: any[] = [700, 400];
+  view: any[] = [800, 400];
   names: String[]
   initialized = false;
 
@@ -28,6 +28,7 @@ export class ChartComponent implements OnInit {
   xAxisLabel = 'Date';
   showYAxisLabel = true;
   yAxisLabel: string;
+  isTimeline = true;
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
@@ -100,6 +101,11 @@ export class ChartComponent implements OnInit {
 
   compareFn(c1: string, c2: string): boolean {
     return c1.toLowerCase() === c2.toLowerCase();
-}
+  }
+
+  formatDate(val: string) {
+    let string = val.substring(1,5);
+    return string
+  }
 
 }
