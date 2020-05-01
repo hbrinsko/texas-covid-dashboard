@@ -11,7 +11,7 @@ import { County, Chart } from './models/timeline.model';
 export class ChartComponent implements OnInit {
   counties: County[]
   chart: Chart[]
-  view: any[] = [800, 400];
+  view: any[] = [1000, 500];
   names: String[]
   initialized = false;
 
