@@ -1,43 +1,52 @@
-<div class="row">
-  <mat-form-field>
-    <mat-label>Select Counties</mat-label>
-    <mat-select multiple [(value)]="selectedCounties" [compareWith]="compareFn">
-      <mat-option *ngFor="let name of names" (onSelectionChange)="onCountyChange(name)" [value]="name">
-        {{name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  
-  <mat-form-field>
-    <mat-label>Select a Chart Type</mat-label>
-    <mat-select [(value)]="selectedChart" (selectionChange)="onChartChange($event)">
-      <mat-option value="0">
-        Daily New Cases
-      </mat-option>
-      <mat-option value="1">
-        Cases Counts
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <div *ngIf="chart && selectedCounties.length > 0">
-    <ngx-charts-line-chart
-    [view]="view"
-    [scheme]="colorScheme"
-    [results]="chart"
-    [gradient]="gradient"
-    [xAxis]="showXAxis"
-    [yAxis]="showYAxis"
-    [legend]="showLegend"
-    [timeline]="isTimeline"
-    [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxisTickFormatting]="formatDate"
-    [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    [autoScale]="autoScale">
-    </ngx-charts-line-chart>
+  <div class="row">
+    <div class="col-md-4 col-xs-12">
+      <mat-form-field>
+        <mat-label>Select Counties</mat-label>
+        <mat-select multiple [(value)]="selectedCounties" [compareWith]="compareFn">
+          <mat-option *ngFor="let name of names" (onSelectionChange)="onCountyChange(name)" [value]="name">
+            {{name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4 col-xs-12 ">
+      <mat-form-field>
+        <mat-label>Select a Chart Type</mat-label>
+        <mat-select [(value)]="selectedChart" (selectionChange)="onChartChange($event)">
+          <mat-option value="0">
+            Daily New Cases
+          </mat-option>
+          <mat-option value="1">
+            Cases Counts
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-4 col-xs-12">
+      <mat-form-field>
+        <mat-label>Time Range</mat-label>
+        <mat-select [(value)]="selectedRange" (selectionChange)="onRangeChange($event)">
+          <mat-option value="0">
+            All time (Starting 3/4)
+          </mat-option>
+          <mat-option value="7">
+            Past 7 days
+          </mat-option>
+          <mat-option value="30">
+            Past 30 days
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
-</div>
-
-
+  <div class="row">
+    <div class="col">
+        <div *ngIf="chart && selectedCounties.length > 0" class="chart-parent">
+            <ngx-charts-line-chart [scheme]="colorScheme" [results]="chart" [gradient]="gradient"
+              [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [timeline]="isTimeline"
+              [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisTickFormatting]="formatDate"
+              [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [autoScale]="autoScale">
+            </ngx-charts-line-chart>
+        </div>
+    </div>
+  </div>

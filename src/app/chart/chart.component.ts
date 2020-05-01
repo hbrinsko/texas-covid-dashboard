@@ -18,12 +18,13 @@ export class ChartComponent implements OnInit {
   // selected options
   selectedCounties: string[] = [];
   selectedChart: string;
+  selectedRange: string;
 
   // chart info
   showXAxis = true;
   showYAxis = true;
   gradient = false;
-  showLegend = true;
+  showLegend = false;
   showXAxisLabel = true;
   xAxisLabel = 'Date';
   showYAxisLabel = true;
@@ -39,6 +40,7 @@ export class ChartComponent implements OnInit {
 
   async ngOnInit() {
     this.selectedChart = "0";
+    this.selectedRange = "30"
     this.selectedCounties.push("Total");
     this.yAxisLabel = 'New Cases Per Day';
     await this.getCounties();
@@ -70,6 +72,11 @@ export class ChartComponent implements OnInit {
     this.updateChart();
   }
 
+  onRangeChange(event: any) {
+    this.selectedRange = event.value;
+    this.updateChart();
+  }
+
   updateChart() : void {
     switch(this.selectedChart) {
       case "0": {
@@ -85,7 +92,7 @@ export class ChartComponent implements OnInit {
 
   setChartForDailyCases(): void {
     this.yAxisLabel = 'New Cases Per Day';
-    this.chartService.getDailyChange(this.selectedCounties)
+    this.chartService.getDailyChange(this.selectedCounties, this.selectedRange)
     .subscribe(counties => {
       this.chart = this.chartService.mapCountiesToCharts(counties)
     });  
@@ -93,7 +100,7 @@ export class ChartComponent implements OnInit {
 
   setChartForCaseCounts(): void {
     this.yAxisLabel = 'Total Cases';
-    this.chartService.getCaseCount(this.selectedCounties)
+    this.chartService.getCaseCount(this.selectedCounties, this.selectedRange)
     .subscribe(counties => {
       this.chart = this.chartService.mapCountiesToCharts(counties)
     });  

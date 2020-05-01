@@ -27,10 +27,11 @@ export class ChartService {
   }
 
   /** GET daily change information  */
-  getDailyChange(counties: string[]): Observable<County[]> {
-    let param = this.buildParams(counties);
+  getDailyChange(counties: string[], range: string): Observable<County[]> {
+    let param = this.buildParams(counties, range);
     const options = counties ?
-      { params: new HttpParams().set('county', param) } : {};
+      { params: new HttpParams().set('county', param)
+        .set('range', range) } : {};
 
     return this.http.get<County[]>(this.BASE_URL + 'dailychange', options)
       .pipe(
@@ -38,22 +39,19 @@ export class ChartService {
   }
 
   /** GET daily change information  */
-  getCaseCount(counties: string[]): Observable<County[]> {
-    let param = this.buildParams(counties);
+  getCaseCount(counties: string[], range: string): Observable<County[]> {
+    let param = this.buildParams(counties, range);
     const options = counties ?
-      { params: new HttpParams().set('county', param) } : {};
+      { params: new HttpParams().set('county', param).set('range', range)  } : {};
 
     return this.http.get<County[]>(this.BASE_URL + 'cases', options)
       .pipe(
       );
   }
 
-  buildParams(counties: string[]): string {
-    var returnVal = ''
-    counties.forEach( c => {
-      returnVal += c + ','
-    })
-    return returnVal;
+  buildParams(counties: string[], range: string): string {
+    var countyParam = counties.join(',');
+    return countyParam;
   }
 
   mapCountiesToCharts(counties: County[]) : Chart[] {
