@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartService } from './chart.service';
-import { County, Chart } from './models/timeline.model';
+import { County, Chart, ChartType } from './models/timeline.model';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-chart',
@@ -19,6 +20,8 @@ export class ChartComponent implements OnInit {
   selectedCounties: string[] = [];
   selectedChart: string;
   selectedRange: string;
+  selectedType: string;
+  selectedData: string;
 
   // chart info
   showXAxis = true;
@@ -34,6 +37,14 @@ export class ChartComponent implements OnInit {
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
+
+  chartOptions: ChartType[] = [
+    { label: 'Daily New Cases', type: 'daily', data: 'cases'},
+    { label: 'Daily New Fatalities', type: 'daily', data: 'fatalities'},
+    { label: 'Total Cases', type: 'total', data: 'cases'},
+    { label: 'Ttoal Fatalities', type: 'total', data: 'fatalities'},
+  ]
+
   autoScale = true;
 
   constructor(private chartService: ChartService) { }
@@ -67,8 +78,11 @@ export class ChartComponent implements OnInit {
     this.updateChart();
   }
 
-  onChartChange(event: any) {
-    this.selectedChart = event.value;
+  onChartChange(event: MatSelectChange) {
+    var chart = event.value
+    this.selectedType = chart.type;
+    this.selectedData = chart.data;
+    this.yAxisLabel = chart.label;
     this.updateChart();
   }
 
@@ -78,32 +92,11 @@ export class ChartComponent implements OnInit {
   }
 
   updateChart() : void {
-    switch(this.selectedChart) {
-      case "0": {
-        this.setChartForDailyCases();
-        break;
-      }
-      case "1": {
-        this.setChartForCaseCounts();
-        break;
-      }
-    }
-  }
-
-  setChartForDailyCases(): void {
-    this.yAxisLabel = 'New Cases Per Day';
-    this.chartService.getDailyChange(this.selectedCounties, this.selectedRange)
+    this.chartService.getChart(this.selectedCounties, this.selectedRange,
+      this.selectedType, this.selectedData)
     .subscribe(counties => {
       this.chart = this.chartService.mapCountiesToCharts(counties)
-    });  
-  }
-
-  setChartForCaseCounts(): void {
-    this.yAxisLabel = 'Total Cases';
-    this.chartService.getCaseCount(this.selectedCounties, this.selectedRange)
-    .subscribe(counties => {
-      this.chart = this.chartService.mapCountiesToCharts(counties)
-    });  
+    }); 
   }
 
   compareFn(c1: string, c2: string): boolean {

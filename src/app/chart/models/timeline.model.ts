@@ -7,7 +7,7 @@ export class County {
 
 export class Timeline {
     date: string;
-    cases: number;
+    amount: number;
 }
 
 export class Chart {
@@ -18,4 +18,10 @@ export class Chart {
 export class Series {
     name: string;
     value: number;
+}
+
+export class ChartType {
+    label: string;
+    type: string;
+    data: string;
 }

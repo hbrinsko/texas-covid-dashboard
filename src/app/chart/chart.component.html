@@ -13,11 +13,8 @@
       <mat-form-field>
         <mat-label>Select a Chart Type</mat-label>
         <mat-select [(value)]="selectedChart" (selectionChange)="onChartChange($event)">
-          <mat-option value="0">
-            Daily New Cases
-          </mat-option>
-          <mat-option value="1">
-            Cases Counts
+          <mat-option *ngFor="let chart of chartOptions" [value]="chart">
+            {{chart.label}}
           </mat-option>
         </mat-select>
       </mat-form-field>

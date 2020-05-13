@@ -15,7 +15,6 @@ const httpOptions = {
 @Injectable()
 export class ChartService {
   BASE_URL = 'https://texas-covid-api.herokuapp.com/api/'
-
   constructor(
     private http: HttpClient) {
   }
@@ -26,25 +25,16 @@ export class ChartService {
       .pipe();
   }
 
-  /** GET daily change information  */
-  getDailyChange(counties: string[], range: string): Observable<County[]> {
+  /** GET chart information  */
+  getChart(counties: string[], range: string, type: string, data: string): Observable<County[]> {
     let param = this.buildParams(counties, range);
     const options = counties ?
       { params: new HttpParams().set('county', param)
-        .set('range', range) } : {};
+        .set('range', range)
+        .set('type', type)
+        .set('data', data) } : {};
 
-    return this.http.get<County[]>(this.BASE_URL + 'dailychange', options)
-      .pipe(
-      );
-  }
-
-  /** GET daily change information  */
-  getCaseCount(counties: string[], range: string): Observable<County[]> {
-    let param = this.buildParams(counties, range);
-    const options = counties ?
-      { params: new HttpParams().set('county', param).set('range', range)  } : {};
-
-    return this.http.get<County[]>(this.BASE_URL + 'cases', options)
+    return this.http.get<County[]>(this.BASE_URL + 'timeline', options)
       .pipe(
       );
   }
@@ -63,7 +53,7 @@ export class ChartService {
 
   mapTimelineToSeries(timeline: Timeline[]): Series[] {
     return timeline.map( tl => { return {
-      value: tl.cases,
+      value: tl.amount,
       name: tl.date
     }})
   }
