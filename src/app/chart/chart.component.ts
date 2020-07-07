@@ -43,6 +43,8 @@ export class ChartComponent implements OnInit {
     { label: 'Daily New Fatalities', type: 'daily', data: 'fatalities'},
     { label: 'Total Cases', type: 'total', data: 'cases'},
     { label: 'Total Fatalities', type: 'total', data: 'fatalities'},
+    { label: 'Cumulative Testing', type: 'total', data: 'testing'},
+    { label: 'Daily Testing', type: 'daily', data: 'testing'},
   ]
 
   autoScale = true;
