@@ -1,4 +1,15 @@
   <div class="row">
+    <div class="col">
+        <div *ngIf="chart && selectedCounties.length > 0" class="chart-parent">
+            <ngx-charts-line-chart [scheme]="colorScheme" [results]="chart" [gradient]="gradient"
+              [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [timeline]="isTimeline"
+              [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisTickFormatting]="formatDate"
+              [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [autoScale]="autoScale">
+            </ngx-charts-line-chart>
+        </div>
+    </div>
+  </div>
+  <div class="row options">
     <div class="col-md-4 col-xs-12">
       <mat-form-field>
         <mat-label>Select Counties</mat-label>
@@ -37,16 +48,5 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-        <div *ngIf="chart && selectedCounties.length > 0" class="chart-parent">
-            <ngx-charts-line-chart [scheme]="colorScheme" [results]="chart" [gradient]="gradient"
-              [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [timeline]="isTimeline"
-              [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisTickFormatting]="formatDate"
-              [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [autoScale]="autoScale">
-            </ngx-charts-line-chart>
-        </div>
     </div>
   </div>
